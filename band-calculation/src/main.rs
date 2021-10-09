@@ -1,3 +1,4 @@
+mod atom;
 mod tight_binding;
 
 fn main() {
