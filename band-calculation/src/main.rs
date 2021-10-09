@@ -11,6 +11,16 @@ struct TightBindingOnsiteParameters {
 
 fn main() {
     // TODO: create tight-binding parameters
+    let tb_parameter = TightBindingOnsiteParameters {
+        s: -2.0196,
+        p: 4.5448,
+        s_ast: 19.6748,
+        d: 14.1836,
+    };
+    println!("parameter:{}", tb_parameter.s);
+    println!("parameter:{}", tb_parameter.p);
+    println!("parameter:{}", tb_parameter.s_ast);
+    println!("parameter:{}", tb_parameter.d);
     // TODO: create unit cell object
     // TODO: create unit cell object
     // TODO: generate output file
