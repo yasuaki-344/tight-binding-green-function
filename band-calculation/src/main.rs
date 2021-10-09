@@ -1,76 +1,3 @@
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize)]
-struct TightBindingOnsiteParameters {
-    /// s-orbit onsite energy parameter.
-    s: f64,
-    /// p-orbit onsite energy parameter.
-    p: f64,
-    /// s*-orbit onsite energy parameter.
-    s_ast: f64,
-    /// d-orbit onsite energy parameter.
-    d: f64,
-}
-
-#[derive(Serialize, Deserialize)]
-struct TB_ScalingParameters {
-    /// hopping energy in no-strain.
-    h0: f64,
-    /// 1st scaling parameter.
-    n: f64,
-    /// 2nd scaling parameter.
-    nc: f64,
-    /// 3rd scaling parameter.
-    rc: f64,
-}
-
-/// Tight-Binding interaction parameters.
-#[derive(Serialize, Deserialize)]
-struct TB_InteractionParameters {
-    /// (ss sigma) element.
-    s_s_sigma: TB_ScalingParameters,
-    /// (ps sigma) element.
-    p_s_sigma: TB_ScalingParameters,
-    /// (pp sigma) element.
-    p_p_sigma: TB_ScalingParameters,
-    /// (pp pi) element.
-    p_p_pi: TB_ScalingParameters,
-    /// (s^*s sigma) element.
-    s_ast_s_sigma: TB_ScalingParameters,
-    /// (s^*p sigma) element.
-    s_ast_p_sigma: TB_ScalingParameters,
-    /// (s^*s^* sigma) element.
-    s_ast_s_ast_sigma: TB_ScalingParameters,
-    /// (ds sigma) element.
-    d_s_sigma: TB_ScalingParameters,
-    /// (ds^* sigma) element.
-    d_s_ast_sigma: TB_ScalingParameters,
-    /// (dp sigma) element.
-    d_p_sigma: TB_ScalingParameters,
-    /// (dp pi) element.
-    d_p_pi: TB_ScalingParameters,
-    /// (dd sigma) element.
-    d_d_sigma: TB_ScalingParameters,
-    /// (dd pi) element.
-    d_d_pi: TB_ScalingParameters,
-    /// (dd delta) element.
-    d_d_delta: TB_ScalingParameters,
-}
-
-#[derive(Serialize, Deserialize)]
-struct TightBindingParameter {
-    /// distance between nearest neighboring atoms in bulk crystal [Ang].
-    atomic_distance: f64,
-    /// Tight-Binding Onsite Parameter of anion.
-    onsite_anion: TightBindingOnsiteParameters,
-    /// Tight-Binding Onsite Parameter of cation.
-    onsite_cation: TightBindingOnsiteParameters,
-    /// Tight-Binding Overlap Parameter of the transition from anion.
-    overlap_from_anion: TB_InteractionParameters,
-    /// Tight-Binding Overlap Parameter of the transition from cation.
-    overlap_from_cation: TB_InteractionParameters,
-}
-
 mod tight_binding {
     use serde::{Deserialize, Serialize};
 
@@ -84,6 +11,65 @@ mod tight_binding {
         pub s_ast: f64,
         /// d-orbit onsite energy parameter.
         pub d: f64,
+    }
+
+    #[derive(Serialize, Deserialize)]
+    pub struct ScalingParameters {
+        /// hopping energy in no-strain.
+        pub h0: f64,
+        /// 1st scaling parameter.
+        pub n: f64,
+        /// 2nd scaling parameter.
+        pub nc: f64,
+        /// 3rd scaling parameter.
+        pub rc: f64,
+    }
+
+    /// Tight-Binding interaction parameters.
+    #[derive(Serialize, Deserialize)]
+    pub struct InteractionParameters {
+        /// (ss sigma) element.
+        pub s_s_sigma: ScalingParameters,
+        /// (ps sigma) element.
+        pub p_s_sigma: ScalingParameters,
+        /// (pp sigma) element.
+        pub p_p_sigma: ScalingParameters,
+        /// (pp pi) element.
+        pub p_p_pi: ScalingParameters,
+        /// (s^*s sigma) element.
+        pub s_ast_s_sigma: ScalingParameters,
+        /// (s^*p sigma) element.
+        pub s_ast_p_sigma: ScalingParameters,
+        /// (s^*s^* sigma) element.
+        pub s_ast_s_ast_sigma: ScalingParameters,
+        /// (ds sigma) element.
+        pub d_s_sigma: ScalingParameters,
+        /// (ds^* sigma) element.
+        pub d_s_ast_sigma: ScalingParameters,
+        /// (dp sigma) element.
+        pub d_p_sigma: ScalingParameters,
+        /// (dp pi) element.
+        pub d_p_pi: ScalingParameters,
+        /// (dd sigma) element.
+        pub d_d_sigma: ScalingParameters,
+        /// (dd pi) element.
+        pub d_d_pi: ScalingParameters,
+        /// (dd delta) element.
+        pub d_d_delta: ScalingParameters,
+    }
+
+    #[derive(Serialize, Deserialize)]
+    struct Parameters {
+        /// distance between nearest neighboring atoms in bulk crystal [Ang].
+        atomic_distance: f64,
+        /// Tight-Binding Onsite Parameter of anion.
+        onsite_anion: OnsiteParameters,
+        /// Tight-Binding Onsite Parameter of cation.
+        onsite_cation: OnsiteParameters,
+        /// Tight-Binding Overlap Parameter of the transition from anion.
+        overlap_from_anion: InteractionParameters,
+        /// Tight-Binding Overlap Parameter of the transition from cation.
+        overlap_from_cation: InteractionParameters,
     }
 }
 
