@@ -71,9 +71,25 @@ struct TightBindingParameter {
     overlap_from_cation: TB_InteractionParameters,
 }
 
+mod tight_binding {
+    use serde::{Deserialize, Serialize};
+
+    #[derive(Serialize, Deserialize)]
+    pub struct OnsiteParameters {
+        /// s-orbit onsite energy parameter.
+        pub s: f64,
+        /// p-orbit onsite energy parameter.
+        pub p: f64,
+        /// s*-orbit onsite energy parameter.
+        pub s_ast: f64,
+        /// d-orbit onsite energy parameter.
+        pub d: f64,
+    }
+}
+
 fn main() {
     // TODO: create tight-binding parameters
-    let tb_parameter = TightBindingOnsiteParameters {
+    let tb_parameter = tight_binding::OnsiteParameters {
         s: -2.0196,
         p: 4.5448,
         s_ast: 19.6748,
