@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
 struct TightBindingOnsiteParameters {
     /// s-orbit onsite energy parameter.
     s: f64,
@@ -17,10 +20,8 @@ fn main() {
         s_ast: 19.6748,
         d: 14.1836,
     };
-    println!("parameter:{}", tb_parameter.s);
-    println!("parameter:{}", tb_parameter.p);
-    println!("parameter:{}", tb_parameter.s_ast);
-    println!("parameter:{}", tb_parameter.d);
+    let json = serde_json::to_string(&tb_parameter).unwrap();
+    println!("{}", json);
     // TODO: create unit cell object
     // TODO: create unit cell object
     // TODO: generate output file
