@@ -1,8 +1,10 @@
+extern crate blas;
+extern crate nalgebra as na;
+extern crate openblas_src;
 mod atom;
 mod tight_binding;
-use nalgebra::Matrix2;
+use nalgebra_lapack::SymmetricEigen;
 use plotters::prelude::*;
-// use nalgebra_lapack::SymmetricEigen;
 
 fn plot_data() -> Result<(), Box<dyn std::error::Error>> {
     let data = vec![(1.0, 1.0), (2.0, 4.0), (3.0, 9.0), (4.0, 16.0), (5.0, 25.0)];
@@ -56,6 +58,9 @@ fn main() {
     }
     let _ = plot_data();
 
-    let matrix = Matrix2::new(1.0, 2.0, 3.0, 4.0);
+    let matrix = na::Matrix2::new(1.0, 0.0, 0.0, 3.0);
     println!("{}", matrix);
+    let eigen = SymmetricEigen::new(matrix);
+    let eigen_values = eigen.eigenvalues;
+    println!("{}", eigen_values);
 }
