@@ -9,3 +9,5 @@ edition = "2018"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 plotters = "0.3.1"
+nalgebra = "0.29.0"
+nalgebra-lapack = "0.20.0"

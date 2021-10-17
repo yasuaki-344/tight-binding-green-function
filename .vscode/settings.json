@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
     "eigen",
+    "lapack",
+    "nalgebra",
     "rustfmt",
     "rustup",
     "serde"
