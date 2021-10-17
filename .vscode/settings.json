@@ -2,6 +2,7 @@
   "cSpell.words": [
     "eigen",
     "rustfmt",
-    "rustup"
+    "rustup",
+    "serde"
   ]
 }
