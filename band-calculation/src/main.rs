@@ -2,9 +2,9 @@ extern crate ndarray;
 extern crate ndarray_linalg;
 mod atom;
 mod tight_binding;
-use plotters::prelude::*;
 use ndarray::*;
 use ndarray_linalg::*;
+use plotters::prelude::*;
 
 const OUT_FILE_NAME: &'static str = "band-structure.png";
 
@@ -52,9 +52,18 @@ fn plot_data() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn main() {
-    let hamiltonian = arr2(&[[-2.0, 1.0], [1.0, -2.0]]);
-    let (eigen, _) = hamiltonian.clone().eigh(UPLO::Upper).unwrap();
-    println!("eigenvalues = \n{:?}", eigen);
-
+    let wave_number_point = 100;
+    for ik in 0..wave_number_point {
+        let wave_number = (ik as f64) * (1.0 / std::f64::consts::PI);
+        println!("wave number: {}", wave_number);
+        // TODO: create Hamiltonian matrix
+        let hamiltonian = arr2(&[
+            [c64::new(-2.0, 0.0), 1.0 + c64::new(0., wave_number).exp()],
+            [1.0 + c64::new(0., -wave_number).exp(), c64::new(-2.0, 0.0)],
+        ]);
+        let (eigen, _) = hamiltonian.clone().eigh(UPLO::Upper).unwrap();
+        println!("eigenvalues = \n{:?}", eigen);
+    }
+    // TODO: output eigen values to file
     let _ = plot_data();
 }
