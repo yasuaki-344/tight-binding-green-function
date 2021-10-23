@@ -3,6 +3,8 @@ extern crate ndarray_linalg;
 mod atom;
 mod tight_binding;
 use plotters::prelude::*;
+use ndarray::*;
+use ndarray_linalg::*;
 
 const OUT_FILE_NAME: &'static str = "band-structure.png";
 
@@ -50,29 +52,9 @@ fn plot_data() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 fn main() {
-    // TODO: create tight-binding parameters
-    let tb_parameter = tight_binding::OnsiteParameters {
-        s: -2.0196,
-        p: 4.5448,
-        s_ast: 19.6748,
-        d: 14.1836,
-    };
-    let json = serde_json::to_string(&tb_parameter).unwrap();
-    println!("{}", json);
-    // TODO: create unit cell object
-    // TODO: generate output file
-    let wave_number_point = 100;
-    for ik in 0..wave_number_point {
-        println!("wave number: {}", ik);
-        // TODO: create Hamiltonian matrix
-        // TODO: solve eigen value problem of Hamiltonian matrix
-        // TODO: output eigen values to file
-    }
-    let _ = plot_data();
+    let hamiltonian = arr2(&[[-2.0, 1.0], [1.0, -2.0]]);
+    let (eigen, _) = hamiltonian.clone().eigh(UPLO::Upper).unwrap();
+    println!("eigenvalues = \n{:?}", eigen);
 
-    // //     let matrix = na::Matrix2::new(1.0, 0.0, 0.0, 3.0);
-    // //     println!("{}", matrix);
-    // //     let eigen = SymmetricEigen::new(matrix);
-    // //     let eigen_values = eigen.eigenvalues;
-    // //     println!("{}", eigen_values);
+    let _ = plot_data();
 }
