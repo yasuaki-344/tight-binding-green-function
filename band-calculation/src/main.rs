@@ -1,9 +1,7 @@
-extern crate blas;
-extern crate nalgebra as na;
-extern crate openblas_src;
+extern crate ndarray;
+extern crate ndarray_linalg;
 mod atom;
 mod tight_binding;
-use nalgebra_lapack::SymmetricEigen;
 use plotters::prelude::*;
 
 const OUT_FILE_NAME: &'static str = "band-structure.png";
@@ -72,9 +70,9 @@ fn main() {
     }
     let _ = plot_data();
 
-    let matrix = na::Matrix2::new(1.0, 0.0, 0.0, 3.0);
-    println!("{}", matrix);
-    let eigen = SymmetricEigen::new(matrix);
-    let eigen_values = eigen.eigenvalues;
-    println!("{}", eigen_values);
+    // //     let matrix = na::Matrix2::new(1.0, 0.0, 0.0, 3.0);
+    // //     println!("{}", matrix);
+    // //     let eigen = SymmetricEigen::new(matrix);
+    // //     let eigen_values = eigen.eigenvalues;
+    // //     println!("{}", eigen_values);
 }

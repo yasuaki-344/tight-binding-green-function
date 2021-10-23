@@ -1,9 +1,12 @@
 {
   "cSpell.words": [
     "blas",
+    "consts",
     "eigen",
     "lapack",
+    "linalg",
     "nalgebra",
+    "ndarray",
     "openblas",
     "rustfmt",
     "rustup",
