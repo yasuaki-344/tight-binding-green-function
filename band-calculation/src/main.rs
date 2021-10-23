@@ -6,34 +6,48 @@ mod tight_binding;
 use nalgebra_lapack::SymmetricEigen;
 use plotters::prelude::*;
 
+const OUT_FILE_NAME: &'static str = "band-structure.png";
+
 fn plot_data() -> Result<(), Box<dyn std::error::Error>> {
-    let data = vec![(1.0, 1.0), (2.0, 4.0), (3.0, 9.0), (4.0, 16.0), (5.0, 25.0)];
-    let xs: Vec<f64> = data.iter().map(|(x, _)| *x).collect();
-    let ys: Vec<f64> = data.iter().map(|(_, y)| *y).collect();
     let image_width = 1080;
     let image_height = 720;
-    let root =
-        BitMapBackend::new("band-structure.png", (image_width, image_height)).into_drawing_area();
-    root.fill(&WHITE)?;
-    let (y_min, y_max) = ys
-        .iter()
-        .fold((0.0 / 0.0, 0.0 / 0.0), |(m, n), v| (v.min(m), v.max(n)));
-    let caption = "Band Structure";
-    let font = ("sans-serif", 20);
-    let mut chart = ChartBuilder::on(&root)
-        .caption(caption, font.into_font())
-        .margin(10)
-        .x_label_area_size(16)
-        .y_label_area_size(42)
-        .build_cartesian_2d(*xs.first().unwrap()..*xs.last().unwrap(), y_min..y_max)?;
 
-    chart.configure_mesh().draw()?;
+    let root_area =
+        BitMapBackend::new(OUT_FILE_NAME, (image_width, image_height)).into_drawing_area();
 
-    let point_series = xs
-        .iter()
-        .zip(ys.iter())
-        .map(|(x, y)| Circle::new((*x, *y), 4, &RED));
-    chart.draw_series(point_series)?;
+    root_area.fill(&WHITE)?;
+
+    let x_axis = (0f32..std::f32::consts::PI).step(0.01 * std::f32::consts::PI);
+
+    let mut cc = ChartBuilder::on(&root_area)
+        .margin(5)
+        .set_all_label_area_size(50)
+        .caption("band structure", ("sans-serif", 30))
+        .build_cartesian_2d(0f32..std::f32::consts::PI, -4.2f32..0.2f32)?;
+
+    cc.configure_mesh()
+        .x_labels(20)
+        .y_labels(10)
+        .x_label_formatter(&|v| format!("{:.1}", v))
+        .y_label_formatter(&|v| format!("{:.1}", v))
+        .draw()?;
+
+    // plot data
+    let _ = cc.draw_series(LineSeries::new(
+        x_axis
+            .values()
+            .map(|x| (x, -2.0 + (2.0 + 2.0 * x.cos()).sqrt())),
+        &RED,
+    ));
+    let _ = cc.draw_series(LineSeries::new(
+        x_axis
+            .values()
+            .map(|x| (x, -2.0 - (2.0 + 2.0 * x.cos()).sqrt())),
+        &RED,
+    ));
+
+    // save plot data as image file
+    root_area.present().expect("Unable to write result to file");
     Ok(())
 }
 
