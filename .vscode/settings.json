@@ -1,6 +1,17 @@
 {
   "cSpell.words": [
+    "blas",
+    "consts",
+    "eigen",
+    "eigh",
+    "lapack",
+    "linalg",
+    "nalgebra",
+    "ndarray",
+    "openblas",
     "rustfmt",
-    "rustup"
+    "rustup",
+    "serde",
+    "UPLO"
   ]
 }

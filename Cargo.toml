@@ -1,6 +1,5 @@
 [workspace]
 
 members = [
-    "adder",
-    "add-one",
+    "band-calculation",
 ]
